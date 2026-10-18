@@ -1,0 +1,1528 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Fabian 💙</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #070817;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+#universe {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 20%, #25205b 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 70%, #24154a 0%, transparent 45%),
+    #070817;
+}
+
+#stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.nebula {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .25;
+  animation: nebulaMove 12s ease-in-out infinite alternate;
+}
+
+.nebula.one {
+  background: #7847ff;
+  top: 10%;
+  left: -100px;
+}
+
+.nebula.two {
+  background: #287bff;
+  bottom: 5%;
+  right: -120px;
+  animation-delay: -5s;
+}
+
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.screen {
+  display: none;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding: 55px 22px 40px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.screen.active {
+  display: flex;
+  animation: screenAppear 1s ease forwards;
+}
+
+.screen.fade-out {
+  animation: screenDisappear .65s ease forwards;
+  pointer-events: none;
+}
+
+.glow-title {
+  font-size: clamp(35px, 9vw, 58px);
+  line-height: 1.2;
+  font-weight: 900;
+  background: linear-gradient(
+    120deg,
+    #ffffff,
+    #c4b5fd,
+    #93c5fd,
+    #ffffff
+  );
+  background-size: 250% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: titleGlow 5s linear infinite;
+}
+
+.subtitle {
+  max-width: 350px;
+  color: #cbd5ff;
+  font-size: 14px;
+  line-height: 1.9;
+  margin-top: 18px;
+}
+
+.eyebrow {
+  color: #a5b4fc;
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-bottom: 22px;
+}
+
+.glass {
+  width: 100%;
+  max-width: 440px;
+  padding: 25px 21px;
+  border: 1px solid #b7a5ff33;
+  border-radius: 22px;
+  background: #ffffff09;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 40px #6d28d922;
+}
+
+.main-btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 15px 23px;
+  border: 1px solid #c4b5fd88;
+  border-radius: 30px;
+  background: linear-gradient(110deg, #6d28d9, #4338ca);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 25px #7c3aed44;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.main-btn:active {
+  transform: scale(.94);
+  box-shadow: 0 0 35px #a78bfa88;
+}
+
+#musicPlayer {
+  display: none;
+  position: fixed;
+  z-index: 50;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 330px;
+  padding: 10px 14px;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid #c4b5fd44;
+  border-radius: 18px;
+  background: #101027dd;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px #8b5cf622;
+}
+
+.music-disc {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  animation: discSpin 4s linear infinite;
+}
+
+.music-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+#musicTitle {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+#musicStatus {
+  margin-top: 4px;
+  font-size: 9px;
+  color: #a5b4fc;
+}
+
+.music-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 23px;
+}
+
+.music-bars span {
+  width: 3px;
+  height: 8px;
+  border-radius: 5px;
+  background: #c4b5fd;
+  animation: musicWave .6s ease-in-out infinite alternate;
+}
+
+.music-bars span:nth-child(2) {
+  animation-delay: .2s;
+  height: 16px;
+}
+
+.music-bars span:nth-child(3) {
+  animation-delay: .4s;
+  height: 12px;
+}
+
+.music-bars span:nth-child(4) {
+  animation-delay: .1s;
+  height: 19px;
+}
+
+#hindiaMusic,
+#aisMusic {
+  display: none;
+}
+
+@keyframes screenAppear {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes screenDisappear {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-15px); }
+}
+
+@keyframes titleGlow {
+  to { background-position: 250% center; }
+}
+
+@keyframes discSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes musicWave {
+  to { transform: scaleY(.35); }
+}
+
+@keyframes nebulaMove {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(35px, -25px) scale(1.25); }
+}
+</style>
+</head>
+
+<body>
+
+<div id="universe">
+  <canvas id="stars"></canvas>
+  <div class="nebula one"></div>
+  <div class="nebula two"></div>
+</div>
+
+<div id="particles"></div>
+
+<div id="musicPlayer">
+  <div class="music-disc">♫</div>
+  <div class="music-info">
+    <div id="musicTitle">Birthday Memories</div>
+    <div id="musicStatus">Ready to play</div>
+  </div>
+  <div class="music-bars">
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<video id="hindiaMusic"
+  src="Hindia.mp4"
+  preload="auto"
+  playsinline
+  loop></video>
+
+<audio id="aisMusic"
+  src="Ais.mp3"
+  preload="auto"
+  loop></audio>
+
+
+<!-- PART 2: INTRO -->
+
+<section class="screen active" id="intro">
+
+  <div class="eyebrow">✦ A LITTLE SURPRISE FOR YOU ✦</div>
+
+  <div class="intro-symbol">🌌</div>
+
+  <h1 class="glow-title">
+    Hey, Fabian!
+  </h1>
+
+  <p class="subtitle">
+    Ada sesuatu yang spesial buat lu hari ini.
+    <br>
+    Sebuah kejutan kecil yang dibuat
+    dengan sepenuh hati.
+  </p>
+
+  <div class="intro-date">
+    <span>19</span>
+    <div>
+      <strong>OCTOBER</strong>
+      <small>2026 · YOUR SPECIAL DAY</small>
+    </div>
+  </div>
+
+  <button class="main-btn" onclick="enterSurprise()">
+    BUKA KEJUTANNYA ✨
+  </button>
+
+  <p class="intro-bottom">
+    🎧 Pakai earphone biar lebih terasa!
+  </p>
+
+</section>
+
+
+<!-- PART 2: WELCOME -->
+
+<section class="screen" id="welcome">
+
+  <div class="eyebrow">✦ TODAY IS ALL ABOUT YOU ✦</div>
+
+  <div class="welcome-symbol">💙</div>
+
+  <h1 class="glow-title">
+    Happy Birthday!
+  </h1>
+
+  <p class="subtitle">
+    Fabian Rizki Kurniawan Khieraz
+    <br><br>
+    Hari ini bukan sekadar bertambahnya umur,
+    tetapi awal dari cerita baru,
+    harapan baru, dan kenangan baru.
+  </p>
+
+  <div class="glass welcome-card">
+
+    <div class="welcome-stars">✦ ✧ ✦</div>
+
+    <p>
+      Semoga setiap langkah lu membawa
+      kebahagiaan, setiap mimpi menemukan
+      jalannya, dan setiap hari punya alasan
+      untuk disyukuri.
+    </p>
+
+    <div class="welcome-stars">✧ ✦ ✧</div>
+
+  </div>
+
+  <button class="main-btn" onclick="goToCake()">
+    ADA SESUATU BUAT LU 🎂
+  </button>
+
+</section>
+
+
+<style>
+.intro-symbol {
+  font-size: 75px;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 25px #8b5cf6);
+  animation: introFloat 3s ease-in-out infinite;
+}
+
+.intro-date {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 13px 22px;
+  border: 1px solid #a78bfa55;
+  border-radius: 16px;
+  background: #ffffff08;
+  text-align: left;
+}
+
+.intro-date > span {
+  font-size: 38px;
+  font-weight: 900;
+  color: #c4b5fd;
+  text-shadow: 0 0 15px #8b5cf6;
+}
+
+.intro-date strong,
+.intro-date small {
+  display: block;
+}
+
+.intro-date strong {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.intro-date small {
+  margin-top: 6px;
+  font-size: 9px;
+  color: #a5b4fc;
+}
+
+.intro-bottom {
+  margin-top: 35px;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.welcome-symbol {
+  font-size: 66px;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 0 22px #60a5fa88);
+  animation: heartFloat 2.5s ease-in-out infinite;
+}
+
+.welcome-card {
+  margin-top: 25px;
+}
+
+.welcome-card p {
+  color: #dbeafe;
+  font-size: 13px;
+  line-height: 2;
+}
+
+.welcome-stars {
+  margin: 15px 0;
+  color: #c4b5fd;
+  letter-spacing: 8px;
+  animation: welcomeGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes introFloat {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+@keyframes heartFloat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes welcomeGlow {
+  from { opacity: .45; }
+  to { opacity: 1; text-shadow: 0 0 15px #a78bfa; }
+}
+</style>
+
+
+<!-- PART 3A: BIRTHDAY CAKE -->
+
+<section class="screen" id="cake">
+
+  <div class="eyebrow">✦ MAKE A WISH, FABIAN ✦</div>
+
+  <h1 class="cake-heading">Your Special Day</h1>
+
+  <p class="subtitle">
+    Pejamkan mata sebentar, bre...
+    eh, Fabian! 🗿
+    <br>
+    Buat satu harapan di hari spesial lu.
+  </p>
+
+  <div class="cake-stage">
+
+    <div class="cake-halo"></div>
+
+    <div class="cake-art">🎂</div>
+
+    <button
+      type="button"
+      id="touchFlame"
+      class="touch-flame"
+      aria-label="Sentuh api lilin untuk memadamkannya"
+      onclick="blowCandle()">
+      🔥
+    </button>
+
+    <div class="cake-sparkles">✦　✧　✦　✧　✦</div>
+
+  </div>
+
+  <p id="candleInstruction" class="candle-instruction">
+    👆 SENTUH API LILINNYA!
+  </p>
+
+  <p id="candleMessage" class="subtitle">
+    Harapan terbaik buat lu, Fabian. 💙
+  </p>
+
+  <div id="candleAfter" class="glass candle-after">
+
+    <div class="wish-icon">💙</div>
+
+    <h2 class="wish-title">A Wish For You</h2>
+
+    <p class="wish-text">
+      Semoga lu selalu sehat, panjang umur,
+      dimudahkan dalam setiap langkah,
+      dikelilingi orang-orang yang tulus,
+      dan diberi kekuatan saat menghadapi
+      masa-masa sulit.
+      <br><br>
+      Semoga impian lu satu per satu
+      menemukan jalannya.
+      <br><br>
+      <strong>Happy Birthday, Fabian!</strong>
+    </p>
+
+    <button class="main-btn" onclick="openLetter()">
+      BACA SURAT DARI GW 💌
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- PART 3B: BIRTHDAY LETTER -->
+
+<section class="screen" id="letter">
+
+  <div class="eyebrow">✦ A LETTER FROM KENZIE ✦</div>
+
+  <div class="letter-envelope">💌</div>
+
+  <div class="glass letter-card">
+
+    <p class="letter-label">DEAR FABIAN,</p>
+
+    <h2 class="letter-heading">
+      Buat kawan gw...
+    </h2>
+
+    <div class="letter-body">
+
+      Happy birthday, Fabian Rizki Kurniawan Khieraz! 💙
+      <br><br>
+
+      Selamat bertambah usia, kawan.
+      Semoga di umur yang baru ini lu selalu
+      sehat, bahagia, panjang umur, dan
+      semua cita-cita lu bisa tercapai.
+      <br><br>
+
+      Gw bikin website ini karena gw pengen
+      ngasih sesuatu yang beda buat lu.
+      Mungkin ini cuma website sederhana,
+      tapi gw berharap lu bisa ngerasain
+      kalau ada usaha dan ketulusan di baliknya.
+      <br><br>
+
+      Buat gw, persahabatan bukan cuma soal
+      ketawa bareng atau main bareng.
+      Persahabatan juga tentang kenangan,
+      kesalahpahaman, saling memaafkan,
+      dan belajar menghargai satu sama lain.
+      <br><br>
+
+      Ada satu cerita yang masih sering
+      kepikiran sama gw, yaitu tentang
+      sahabat pertama gw,
+      <strong>Muhammad Daffa Ibrahim.</strong>
+      <br><br>
+
+      Bulan Juli kemarin, gw sama Daffa
+      sempat berantem gara-gara masalah sepele.
+      Sekarang gw sebenarnya udah maafin dia,
+      tapi rasanya kami masih sama-sama gengsi
+      buat mulai ngobrol lagi.
+      <br><br>
+
+      Jujur, gw kangen masa-masa bisa main
+      bareng Daffa seperti dulu.
+      Gw pengen banget suatu hari nanti
+      kami bisa main bareng lagi,
+      bercanda lagi, dan ngobrol tanpa canggung.
+      <br><br>
+
+      Tapi kadang gw bingung harus mulai
+      dari mana. Gw merasa dia masih gengsi,
+      dan gw sendiri juga masih belajar
+      buat berani memulai lebih dulu.
+      <br><br>
+
+      Gw cerita ini bukan buat menyalahkan
+      siapa-siapa. Gw cuma sadar kalau
+      persahabatan itu berharga, dan terkadang
+      masalah kecil bisa bikin hubungan
+      terasa jauh kalau dibiarkan terlalu lama.
+      <br><br>
+
+      Dari pengalaman itu, gw belajar:
+      jangan sampai gengsi membuat kita
+      melewatkan kesempatan untuk memperbaiki
+      hubungan dengan orang yang pernah
+      berarti dalam hidup kita.
+      <br><br>
+
+      Nah, buat lu, Fabian, gw juga berharap
+      kita bisa terus membuat kenangan baik,
+      saling menghargai, dan saling mendukung.
+      Semoga persahabatan kita punya banyak
+      cerita seru yang bisa kita ingat
+      bahkan setelah kita makin dewasa nanti.
+      <br><br>
+
+      Semoga tahun ini membawa banyak
+      kebahagiaan, pengalaman baru,
+      kesempatan baik, dan keberanian
+      buat mengejar semua impian lu.
+      <br><br>
+
+      <span class="letter-highlight">
+        Happy birthday, Fabian.
+        Tetap jadi diri lu sendiri,
+        terus melangkah, dan jangan pernah
+        berhenti percaya bahwa masa depan
+        masih menyimpan banyak hal baik
+        buat lu. 💙
+      </span>
+
+      <br><br>
+
+      Makasih udah jadi bagian dari
+      cerita persahabatan gw.
+      <br><br>
+
+      — Kenzie
+
+    </div>
+
+  </div>
+
+  <button class="main-btn" onclick="goToFinal()">
+    SATU KEJUTAN TERAKHIR 🎆
+  </button>
+
+</section>
+
+
+<style>
+.cake-heading {
+  font-size: clamp(30px, 8vw, 45px);
+  color: #f5f3ff;
+  text-shadow: 0 0 25px #a78bfa77;
+}
+
+.cake-stage {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 235px;
+  margin: 15px 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cake-halo {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: #8b5cf6;
+  opacity: .35;
+  filter: blur(55px);
+  animation: cakeHalo 3s ease-in-out infinite alternate;
+}
+
+.cake-art {
+  position: relative;
+  z-index: 2;
+  font-size: 112px;
+  filter: drop-shadow(0 0 24px #a78bfa66);
+  animation: cakeFloat 3s ease-in-out infinite;
+}
+
+.touch-flame {
+  position: absolute;
+  z-index: 5;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58px;
+  height: 58px;
+  border: 1px solid #fbbf2477;
+  border-radius: 50%;
+  background: #211832dd;
+  font-size: 30px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: flameGlow .8s ease-in-out infinite alternate;
+}
+
+.touch-flame:active {
+  transform: translateX(-50%) scale(.85);
+}
+
+.touch-flame.extinguished {
+  animation: flameDisappear .65s ease forwards;
+  pointer-events: none;
+}
+
+.cake-sparkles {
+  position: absolute;
+  bottom: 3px;
+  color: #c4b5fd;
+  font-size: 16px;
+  letter-spacing: 3px;
+  animation: sparkleGlow 2s infinite alternate;
+}
+
+.candle-instruction {
+  color: #93c5fd;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 12px;
+}
+
+.candle-after {
+  display: none;
+  margin-top: 24px;
+}
+
+.candle-after.show {
+  display: block;
+  animation: wishAppear 1s ease both;
+}
+
+.wish-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.wish-title {
+  color: #c4b5fd;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.wish-text {
+  font-size: 13px;
+  line-height: 2;
+  color: #e0e7ff;
+}
+
+.letter-envelope {
+  font-size: 48px;
+  margin-bottom: 18px;
+  animation: cakeFloat 3s ease-in-out infinite;
+}
+
+.letter-card {
+  text-align: left;
+}
+
+.letter-label {
+  color: #93c5fd;
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+
+.letter-heading {
+  font-size: 26px;
+  line-height: 1.5;
+  color: #e9e7ff;
+  margin-bottom: 22px;
+}
+
+.letter-body {
+  color: #dce2ff;
+  font-size: 13px;
+  line-height: 2;
+  overflow-wrap: anywhere;
+}
+
+.letter-highlight {
+  color: #c4b5fd;
+  font-weight: bold;
+}
+
+@keyframes cakeFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes cakeHalo {
+  from { opacity: .2; transform: scale(.85); }
+  to { opacity: .5; transform: scale(1.2); }
+}
+
+@keyframes flameGlow {
+  from { filter: drop-shadow(0 0 4px #fbbf24); }
+  to { filter: drop-shadow(0 0 16px #fb923c); }
+}
+
+@keyframes flameDisappear {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translate(-50%, -35px) scale(.2);
+  }
+}
+
+@keyframes sparkleGlow {
+  from { opacity: .4; }
+  to { opacity: 1; text-shadow: 0 0 15px #a78bfa; }
+}
+
+@keyframes wishAppear {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+
+<!-- PART 4: FINAL BIRTHDAY SCENE -->
+
+<section class="screen" id="final">
+
+  <div class="final-orb">
+    <span>✦</span>
+  </div>
+
+  <p class="eyebrow">✦ A NEW CHAPTER BEGINS ✦</p>
+
+  <h1 class="final-title">
+    YOU ARE
+    <span>ONE OF A KIND</span>
+  </h1>
+
+  <div class="final-divider"></div>
+
+  <p class="final-name">
+    FABIAN RIZKI KURNIAWAN KHIERAZ
+  </p>
+
+  <p class="final-message">
+    Dunia ini luas, dan perjalanan lu masih panjang.
+    <br>
+    Terus bersinar dengan cara lu sendiri.
+    <br><br>
+    Semoga banyak hal baik datang
+    menghampiri langkah lu.
+    <br><br>
+    Happy Birthday, Fabian. 💙
+  </p>
+
+  <div class="final-stars">
+    ✧　⋆　✦　⋆　✧
+  </div>
+
+  <p class="final-signature">
+    Made with love by Kenzie
+  </p>
+
+  <div class="final-music-note">
+    <span class="final-music-icon">♫</span>
+    <div>
+      <strong>One Last Song</strong>
+      <p>A little song, just for you.</p>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="main-btn replay-button"
+    onclick="replaySurprise()">
+    ↻ ULANGI KEJUTAN
+  </button>
+
+</section>
+
+
+<style>
+#final {
+  padding-top: 65px;
+  padding-bottom: 45px;
+}
+
+.final-orb {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c4b5fd88;
+  border-radius: 50%;
+  color: #ddd6fe;
+  font-size: 48px;
+  background:
+    radial-gradient(circle, #8b5cf633, #10102722);
+  box-shadow:
+    0 0 25px #8b5cf655,
+    inset 0 0 25px #8b5cf633;
+  animation: finalOrb 4s ease-in-out infinite;
+}
+
+.final-title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: clamp(32px, 9vw, 55px);
+  line-height: 1.3;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 0 25px #a78bfa66;
+  animation: finalAppear 1.5s ease both;
+}
+
+.final-title span {
+  color: #c4b5fd;
+  text-shadow:
+    0 0 12px #8b5cf6,
+    0 0 35px #8b5cf666;
+}
+
+.final-divider {
+  width: 110px;
+  height: 2px;
+  margin: 26px auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #c4b5fd,
+    #93c5fd,
+    transparent
+  );
+  box-shadow: 0 0 15px #a78bfa;
+}
+
+.final-name {
+  max-width: 340px;
+  color: #93c5fd;
+  font-size: 10px;
+  letter-spacing: 2px;
+  line-height: 2;
+  overflow-wrap: anywhere;
+}
+
+.final-message {
+  margin: 25px auto;
+  max-width: 340px;
+  color: #e0e7ff;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.final-stars {
+  margin: 18px 0;
+  color: #c4b5fd;
+  font-size: 25px;
+  animation: finalTwinkle 2s ease-in-out infinite alternate;
+}
+
+.final-signature {
+  margin-top: 8px;
+  color: #a5b4fc;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.final-music-note {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 27px;
+  padding: 13px 19px;
+  border: 1px solid #c4b5fd33;
+  border-radius: 17px;
+  background: #ffffff08;
+  text-align: left;
+}
+
+.final-music-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: white;
+  font-size: 22px;
+  box-shadow: 0 0 20px #8b5cf644;
+  animation: musicIconPulse 2s infinite alternate;
+}
+
+.final-music-note strong {
+  display: block;
+  font-size: 12px;
+  color: #e9e7ff;
+}
+
+.final-music-note p {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #a5b4fc;
+}
+
+.replay-button {
+  margin-top: 25px;
+}
+
+@keyframes finalOrb {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    box-shadow: 0 0 25px #8b5cf655;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.08);
+    box-shadow: 0 0 45px #8b5cf699;
+  }
+}
+
+@keyframes finalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes finalTwinkle {
+  from { opacity: .4; transform: scale(.95); }
+  to {
+    opacity: 1;
+    transform: scale(1.05);
+    text-shadow: 0 0 18px #a78bfa;
+  }
+}
+
+@keyframes musicIconPulse {
+  from { box-shadow: 0 0 10px #8b5cf644; }
+  to { box-shadow: 0 0 25px #8b5cf6aa; }
+}
+</style>
+
+
+<!-- PART 5: SCRIPT UTAMA -->
+
+<script>
+/* =====================================
+   1. NAVIGASI ANTARHALAMAN
+===================================== */
+
+let candleAlreadyBlown = false;
+let isChangingScreen = false;
+let musicFadeInterval = null;
+let starAnimationStarted = false;
+
+const $ = id => document.getElementById(id);
+
+function showScreen(id) {
+  const next = $(id);
+  const current = document.querySelector(".screen.active");
+
+  if (!next || next === current || isChangingScreen) return;
+
+  isChangingScreen = true;
+
+  if (current) {
+    current.classList.add("fade-out");
+
+    setTimeout(() => {
+      current.classList.remove("active", "fade-out");
+      next.classList.add("active");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      isChangingScreen = false;
+    }, 650);
+  } else {
+    next.classList.add("active");
+    isChangingScreen = false;
+  }
+}
+
+
+/* =====================================
+   2. PARTIKEL GALAKSI
+===================================== */
+
+function createBurst() {
+  const container = $("particles");
+  if (!container) return;
+
+  const symbols = ["✦", "✧", "✨", "💙", "⋆"];
+
+  for (let i = 0; i < 24; i++) {
+    const p = document.createElement("span");
+
+    p.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
+    p.style.position = "fixed";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.top = (35 + Math.random() * 45) + "vh";
+    p.style.zIndex = "999";
+    p.style.pointerEvents = "none";
+    p.style.fontSize = (12 + Math.random() * 18) + "px";
+    p.style.color = "#c4b5fd";
+    p.style.textShadow = "0 0 12px #a78bfa";
+    p.style.transition =
+      "transform 1.8s ease, opacity 1.8s ease";
+
+    container.appendChild(p);
+
+    requestAnimationFrame(() => {
+      p.style.transform =
+        "translate(" +
+        ((Math.random() - 0.5) * 220) +
+        "px, -" +
+        (100 + Math.random() * 300) +
+        "px) rotate(" +
+        (Math.random() * 500) +
+        "deg)";
+
+      p.style.opacity = "0";
+    });
+
+    setTimeout(() => p.remove(), 1900);
+  }
+}
+
+
+/* =====================================
+   3. MINI MUSIC PLAYER
+===================================== */
+
+function updateMusicStatus(status, title) {
+  if ($("musicStatus")) {
+    $("musicStatus").textContent = status;
+  }
+
+  if (title && $("musicTitle")) {
+    $("musicTitle").textContent = title;
+  }
+}
+
+function showMusicPlayer() {
+  const player = $("musicPlayer");
+
+  if (player) {
+    player.style.display = "flex";
+  }
+}
+
+
+/* =====================================
+   4. MUSIK HINDIA
+===================================== */
+
+function startHindia() {
+  const music = $("hindiaMusic");
+
+  if (!music) return;
+
+  showMusicPlayer();
+
+  clearInterval(musicFadeInterval);
+
+  music.loop = true;
+  music.volume = 0.7;
+
+  music.play()
+    .then(() => {
+      updateMusicStatus("Now Playing", "Hindia.mp4");
+    })
+    .catch(() => {
+      updateMusicStatus(
+        "Audio gagal diputar — cek file",
+        "Hindia.mp4"
+      );
+    });
+}
+
+function fadeHindiaOut() {
+  const music = $("hindiaMusic");
+
+  if (!music || music.paused) return;
+
+  clearInterval(musicFadeInterval);
+
+  const startVolume = music.volume;
+  const steps = 35;
+  let step = 0;
+
+  updateMusicStatus("Fading out...", "Hindia.mp4");
+
+  musicFadeInterval = setInterval(() => {
+    step++;
+
+    music.volume = Math.max(
+      0,
+      startVolume * (1 - step / steps)
+    );
+
+    if (step >= steps) {
+      clearInterval(musicFadeInterval);
+
+      music.pause();
+      music.currentTime = 0;
+      music.volume = 0.7;
+    }
+  }, 50);
+}
+
+
+/* =====================================
+   5. TOMBOL INTRO DAN WELCOME
+===================================== */
+
+function enterSurprise() {
+  showScreen("welcome");
+  createBurst();
+  startHindia();
+}
+
+function goToCake() {
+  showScreen("cake");
+  createBurst();
+}
+
+
+/* =====================================
+   6. LILIN ULANG TAHUN
+===================================== */
+
+function blowCandle() {
+  if (candleAlreadyBlown) return;
+
+  candleAlreadyBlown = true;
+
+  const flame = $("touchFlame");
+  const instruction = $("candleInstruction");
+  const message = $("candleMessage");
+  const result = $("candleAfter");
+
+  if (flame) {
+    flame.classList.add("extinguished");
+    flame.textContent = "💨";
+  }
+
+  if (instruction) {
+    instruction.textContent =
+      "✨ Api padam... harapan dimulai.";
+  }
+
+  if (message) {
+    message.textContent =
+      "Selamat ulang tahun, Fabian! 💙";
+  }
+
+  createBurst();
+  setTimeout(createBurst, 300);
+  setTimeout(createBurst, 650);
+  setTimeout(createBurst, 1000);
+
+  setTimeout(() => {
+    if (result) {
+      result.classList.add("show");
+    }
+  }, 900);
+}
+
+
+/* =====================================
+   7. SURAT PERSAHABATAN
+===================================== */
+
+function openLetter() {
+  fadeHindiaOut();
+  showScreen("letter");
+  createBurst();
+}
+
+
+/* =====================================
+   8. ENDING + AIS.MP3 LOOP
+===================================== */
+
+function goToFinal() {
+  showScreen("final");
+  createBurst();
+
+  setTimeout(createBurst, 450);
+  setTimeout(createBurst, 900);
+  setTimeout(createBurst, 1400);
+
+  const ais = $("aisMusic");
+
+  if (ais) {
+    showMusicPlayer();
+
+    ais.loop = true;
+    ais.volume = 0.8;
+
+    ais.play()
+      .then(() => {
+        updateMusicStatus("Looping forever ♪", "Ais.mp3");
+      })
+      .catch(() => {
+        updateMusicStatus(
+          "Audio gagal diputar — cek file",
+          "Ais.mp3"
+        );
+      });
+  }
+}
+
+
+/* =====================================
+   9. TOMBOL ULANGI KEJUTAN
+===================================== */
+
+function replaySurprise() {
+  const hindia = $("hindiaMusic");
+  const ais = $("aisMusic");
+
+  clearInterval(musicFadeInterval);
+
+  if (ais) {
+    ais.pause();
+    ais.currentTime = 0;
+  }
+
+  if (hindia) {
+    hindia.pause();
+    hindia.currentTime = 0;
+    hindia.volume = 0.7;
+  }
+
+  candleAlreadyBlown = false;
+
+  const flame = $("touchFlame");
+
+  if (flame) {
+    flame.classList.remove("extinguished");
+    flame.textContent = "🔥";
+  }
+
+  const instruction = $("candleInstruction");
+
+  if (instruction) {
+    instruction.textContent = "👆 SENTUH API LILINNYA!";
+  }
+
+  const message = $("candleMessage");
+
+  if (message) {
+    message.textContent =
+      "Harapan terbaik buat lu, Fabian. 💙";
+  }
+
+  const result = $("candleAfter");
+
+  if (result) {
+    result.classList.remove("show");
+  }
+
+  const player = $("musicPlayer");
+
+  if (player) {
+    player.style.display = "none";
+  }
+
+  showScreen("intro");
+  updateMusicStatus("Ready", "Birthday Memories");
+}
+
+
+/* =====================================
+   10. ANIMASI BINTANG
+===================================== */
+
+function startGalaxy() {
+  if (starAnimationStarted) return;
+
+  starAnimationStarted = true;
+
+  const canvas = $("stars");
+
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) return;
+
+  let stars = [];
+
+  function resize() {
+    const dpr = Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 120 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.5 + 0.3,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.025 + 0.005
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+
+    for (const star of stars) {
+      star.phase += star.speed;
+
+      const opacity =
+        0.25 + Math.abs(Math.sin(star.phase)) * 0.75;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        star.x,
+        star.y,
+        star.r,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle =
+        "rgba(220,210,255," + opacity + ")";
+
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+
+  window.addEventListener("resize", resize);
+
+  draw();
+}
+
+
+/* =====================================
+   11. PERSIAPAN AWAL WEBSITE
+===================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  startGalaxy();
+
+  const player = $("musicPlayer");
+
+  if (player) {
+    player.style.display = "none";
+  }
+
+  const hindia = $("hindiaMusic");
+
+  if (hindia) {
+    hindia.loop = true;
+    hindia.volume = 0.7;
+  }
+
+  const ais = $("aisMusic");
+
+  if (ais) {
+    ais.loop = true;
+    ais.volume = 0.8;
+  }
+});
+</script>
+
+</body>
+</html>
